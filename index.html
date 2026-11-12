@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102b55">
+  <meta name="description" content="Application du Stade Montois Tennis de Table">
+  <title>Stade Montois TT</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="brand"><img src="icons/logo-smtt.svg" alt="Logo provisoire SMTT"><div><p class="eyebrow">APPLICATION DU CLUB</p><h1>Stade Montois<br> Tennis de Table</h1></div></div>
+    <p class="intro">Toutes les informations du club au même endroit.</p>
+  </header>
+  <main>
+    <section class="menu" aria-label="Rubriques">
+      <a class="tile" href="#" data-section="equipes"><span class="emoji">🏓</span><strong>Équipes</strong><small>Compositions et informations</small></a>
+      <a class="tile" href="#" data-section="videos"><span class="emoji">▶️</span><strong>Vidéos</strong><small>Matchs, entraînements et directs</small></a>
+      <a class="tile" href="#" data-section="facebook"><span class="emoji">📘</span><strong>Facebook</strong><small>Actualités du club</small></a>
+      <a class="tile" href="#" data-section="whatsapp"><span class="emoji">💬</span><strong>WhatsApp</strong><small>Groupes et échanges</small></a>
+      <a class="tile" href="#" data-section="calendrier"><span class="emoji">📅</span><strong>Calendrier</strong><small>Dates et compétitions</small></a>
+      <a class="tile" href="#" data-section="helloasso"><span class="emoji">🤝</span><strong>HelloAsso</strong><small>Adhésions et paiements</small></a>
+      <a class="tile" href="#" data-section="documents"><span class="emoji">📄</span><strong>Documents</strong><small>Informations à télécharger</small></a>
+    </section>
+    <section class="panel" id="panel" aria-live="polite">
+      <h2>Bienvenue au club !</h2>
+      <p>Choisis une rubrique ci-dessus. Les liens et contenus seront ajoutés ensemble lors de la configuration.</p>
+    </section>
+  </main>
+  <footer>Stade Montois Tennis de Table</footer>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
+  </script>
+</body>
+</html>
