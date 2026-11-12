@@ -25,11 +25,12 @@
       <a class="tile" href="https://helloasso.com" target="_blank" rel="noopener noreferrer"><span class="emoji">🤝</span><strong>HelloAsso</strong><small>Adhésions et paiements</small></a>
       <a class="tile" href="https://google.com" target="_blank" rel="noopener noreferrer"><span class="emoji">📄</span><strong>Documents</strong><small>Informations à télécharger</small></a>
       <a class="tile" href="https://pingpocket.fr" target="_blank" rel="noopener noreferrer"><span class="emoji">🏓</span><strong>Pingpocket</strong><small>Classements et résultats</small></a>
-      <a class="tile" href="https://fr.butterfly.tt/" target="_blank" rel="noopener noreferrer">
+      <a class="tile" href="https://butterfly.tt" target="_blank" rel="noopener noreferrer">
         <span class="emoji"><img src="logo butterfly.png" alt="Logo Butterfly" style="height: 1.15em; width: auto; vertical-align: middle;"></span>
         <strong>Butterfly</strong>
         <small>Matériel et partenaire</small>
       </a>
+      <a class="tile" href="#panel" data-section="liens"><span class="emoji">🔗</span><strong>Liens externes</strong><small>Ligue (LNATT) et Comité (CD40)</small></a>
     </section>
     <section class="panel" id="panel" aria-live="polite">
       <h2>Bienvenue au club !</h2>
@@ -39,6 +40,26 @@
   <footer>Stade Montois Tennis de Table</footer>
   <script src="app.js"></script>
   <script>
+    document.querySelector('[data-section="liens"]')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      const panel = document.getElementById('panel');
+      panel.innerHTML = `
+        <h2>Liens externes</h2>
+        <p>Accédez directement aux sites officiels des instances régionales et départementales :</p>
+        <div style="display: grid; gap: 0.75rem; margin-top: 1rem;">
+          <a class="tile" href="https://lnatt.fr" target="_blank" rel="noopener noreferrer" style="text-align: left;">
+            <strong>🌐 Ligue Nouvelle-Aquitaine (LNATT)</strong>
+            <small>Compétitions régionales, règlements et actualités de la ligue</small>
+          </a>
+          <a class="tile" href="https://www.cd40tt.com" target="_blank" rel="noopener noreferrer" style="text-align: left;">
+            <strong>🏓 Comité des Landes (CD40TT)</strong>
+            <small>Critérium départemental, championnats et infos des Landes</small>
+          </a>
+        </div>
+      `;
+      panel.scrollIntoView({ behavior: 'smooth' });
+    }, true);
     if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
   </script>
 </body>
