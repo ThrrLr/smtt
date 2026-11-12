@@ -1,4 +1,4 @@
-const CACHE = "smtt-v12";
+const CACHE = "smtt-v13";
 const FILES = ["./","./index.html","./style.css","./app.js","./manifest.webmanifest","./icons/icon.svg","./icons/logo-smtt.svg"];
 
 self.addEventListener("install", event => {
