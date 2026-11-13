@@ -47,6 +47,11 @@
   <p class="intro">Toutes les informations du club au même endroit.</p>
   
   <main>
+    <!-- 📢 Encart Flash Info (invisible tant que la case A1 est vide) -->
+    <section id="flashInfo" style="display: none; background: #fff3cd; border-left: 5px solid #ffc107; color: #856404; padding: 12px 15px; border-radius: 8px; margin-bottom: 15px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+      📢 <span id="texteFlashInfo"></span>
+    </section>
+
     <section class="menu" aria-label="Rubriques">
       <a class="tile" href="https://drive.google.com/drive/u/0/folders/1jVjRtxUFW16XcQiyBiWIJUwUuL2w70L_" target="_blank" rel="noopener noreferrer"><span class="emoji">🏆</span><strong>Équipes</strong><small>Date et Lieu</small></a>
       <a class="tile" href="https://www.youtube.com/@StadeMontoisTennisdeTable" target="_blank" rel="noopener noreferrer"><span class="emoji">▶️</span><strong>Vidéos</strong><small>Matchs, entraînements et directs</small></a>
@@ -67,6 +72,22 @@
   <script src="app.js"></script>
   <script>
     if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
+  </script>
+  
+  <!-- Script dynamique pour le Flash Info depuis Google Sheets -->
+  <script>
+    const urlSheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROcLSItSbZn-h5tLyorTcCdS7IL6EuLbuzwnEHHez7HeFrzoFg-Hmvg6lodTbkKQdy5_s_t2xQPtpl/pub?output=csv";
+
+    fetch(urlSheet + "&t=" + new Date().getTime())
+      .then(response => response.text())
+      .then(texte => {
+        const message = texte.replace(/^"|"$/g, '').trim();
+        if (message.length > 0) {
+          document.getElementById('texteFlashInfo').textContent = message;
+          document.getElementById('flashInfo').style.display = 'block';
+        }
+      })
+      .catch(err => console.log("Pas de flash info"));
   </script>
 </body>
 </html>
