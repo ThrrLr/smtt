@@ -9,12 +9,43 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Animation pour faire bouger la raquette du bonhomme */
+    @keyframes wave {
+      0% { transform: rotate(0deg); }
+      20% { transform: rotate(15deg); }
+      40% { transform: rotate(-10deg); }
+      60% { transform: rotate(15deg); }
+      80% { transform: rotate(-5deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .hero-avatar {
+      width: 90px;
+      height: auto;
+      animation: wave 2.5s infinite ease-in-out;
+      transform-origin: bottom center;
+    }
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
 </head>
 <body>
   <header class="hero">
-    <div class="brand"><img src="LOGO ROND.jpeg" alt="Logo Stade Montois TT"><div><p class="eyebrow">APPLICATION DU CLUB</p><h1>Stade Montois<br> Tennis de Table</h1></div></div>
-    <p class="intro">Toutes les informations du club au même endroit.</p>
+    <div class="brand">
+      <img src="LOGO ROND.jpeg" alt="Logo Stade Montois TT">
+      <div>
+        <p class="eyebrow">APPLICATION DU CLUB</p>
+        <h1>Stade Montois<br> Tennis de Table</h1>
+      </div>
+    </div>
+    <!-- Le bonhomme animé -->
+    <img src="bonhomme.png" alt="Bonjour !" class="hero-avatar">
   </header>
+  <p class="intro">Toutes les informations du club au même endroit.</p>
+  
   <main>
     <section class="menu" aria-label="Rubriques">
       <a class="tile" href="https://drive.google.com/drive/u/0/folders/1jVjRtxUFW16XcQiyBiWIJUwUuL2w70L_" target="_blank" rel="noopener noreferrer"><span class="emoji">🏆</span><strong>Équipes</strong><small>Date et Lieu</small></a>
@@ -30,7 +61,6 @@
     </section>
     <section class="panel" id="panel" aria-live="polite">
       <h2>Bienvenue au club !</h2>
-    
     </section>
   </main>
   <footer>Stade Montois Tennis de Table</footer>
