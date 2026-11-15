@@ -30,6 +30,48 @@
       justify-content: space-between;
       align-items: center;
     }
+    /* Style de la boîte de dialogue flottante (Case A4) */
+    #bulleInfo {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      max-width: 280px;
+      background: #102b55;
+      color: #ffffff;
+      padding: 14px 28px 14px 18px;
+      border-radius: 16px 16px 4px 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      z-index: 1000;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      animation: fadeInUp 0.4s ease-out;
+    }
+    #bulleInfo button {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    #bulleInfo button:hover {
+      opacity: 1;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -64,30 +106,57 @@
       <a class="tile" href="https://fr.butterfly.tt" target="_blank" rel="noopener noreferrer"><span class="emoji"><img src="logo butterfly.png" alt="Logo Butterfly" style="height: 1.15em; width: auto; vertical-align: middle;"></span><strong>Butterfly</strong><small>Matériel et partenaire</small></a>
       <a class="tile" href="#" data-section="liens"><span class="emoji">🔗</span><strong>Liens externes</strong><small>Ligue (LNATT) et Comité (CD40)</small></a>
     </section>
+
     <section class="panel" id="panel" aria-live="polite">
       <h2>Bienvenue au club !</h2>
     </section>
   </main>
+
+  <!-- 💬 Boîte de dialogue flottante en bas à droite (invisible tant que la case A4 est vide) -->
+  <aside id="bulleInfo" aria-live="polite">
+    <button onclick="document.getElementById('bulleInfo').style.display='none'" aria-label="Fermer la notification">&times;</button>
+    <span id="texteBulleInfo"></span>
+  </aside>
+
   <footer>Stade Montois Tennis de Table</footer>
+
   <script src="app.js"></script>
   <script>
-    if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
+    }
   </script>
   
-  <!-- Script dynamique pour le Flash Info depuis Google Sheets -->
+  <!-- Script dynamique pour le Flash Info (A1) et la Boîte de dialogue (A4) depuis Google Sheets -->
   <script>
     const urlSheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vROcLSItSbZn-h5tLyorTcCdS7IL6EuLbuzwnEHHez7HeFrzoFg-Hmvg6lodTbkKQdy5_s_t2xQPtpl/pub?output=csv";
+
+    function nettoyerCellule(ligne) {
+      if (!ligne) return "";
+      const premiereColonne = ligne.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)[0];
+      return premiereColonne.replace(/^"|"$/g, '').trim();
+    }
 
     fetch(urlSheet + "&t=" + new Date().getTime())
       .then(response => response.text())
       .then(texte => {
-        const message = texte.replace(/^"|"$/g, '').trim();
-        if (message.length > 0) {
-          document.getElementById('texteFlashInfo').textContent = message;
+        const lignes = texte.split(/\r?\n/);
+
+        // Case A1 (ligne 1 du tableur -> index 0) : Flash Info en haut
+        const messageA1 = nettoyerCellule(lignes[0]);
+        if (messageA1.length > 0) {
+          document.getElementById('texteFlashInfo').textContent = messageA1;
           document.getElementById('flashInfo').style.display = 'block';
         }
+
+        // Case A4 (ligne 4 du tableur -> index 3) : Boîte de dialogue en bas à droite
+        const messageA4 = nettoyerCellule(lignes[3]);
+        if (messageA4.length > 0) {
+          document.getElementById('texteBulleInfo').textContent = messageA4;
+          document.getElementById('bulleInfo').style.display = 'block';
+        }
       })
-      .catch(err => console.log("Pas de flash info"));
+      .catch(err => console.log("Pas de flash info ni de notification"));
   </script>
 </body>
 </html>
